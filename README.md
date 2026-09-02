@@ -5,7 +5,9 @@
 [![Validate](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0F766E.svg)](LICENSE)
 
-An Agent Skill for turning a user-stated, eligible, time-bounded coding-capacity envelope into useful engineering progress—with explicit approval, evidence, and rollback.
+A portable Agent Skill for turning a user-stated, eligible, time-bounded coding-capacity envelope into useful engineering progress—with explicit approval, evidence, and rollback.
+
+The canonical package is host-neutral under `skills/token-todo`. Codex plugin files are an optional distribution adapter; the same skill directory can be installed by other Agent Skills-compatible hosts.
 
 ## Why this exists
 

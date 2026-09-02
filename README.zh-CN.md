@@ -5,7 +5,9 @@
 [![校验状态](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml)
 [![许可证：MIT](https://img.shields.io/badge/License-MIT-0F766E.svg)](LICENSE)
 
-一个面向编码 Agent 的 Skill：把用户明确提供的、符合规则且有时效的 coding capacity，转化为有价值、可审查、可验证、可回滚的工程进展，并要求明确批准、过程证据和恢复路径。
+一个可移植、面向编码 Agent 的通用 Skill：把用户明确提供的、符合规则且有时效的 coding capacity，转化为有价值、可审查、可验证、可回滚的工程进展，并要求明确批准、过程证据和恢复路径。
+
+规范主体位于宿主无关的 `skills/token-todo` 目录中。Codex Plugin 文件只是可选的分发适配层；同一个 Skill 目录也可以安装到其他兼容 Agent Skills 的宿主。
 
 ## 为什么需要它
 

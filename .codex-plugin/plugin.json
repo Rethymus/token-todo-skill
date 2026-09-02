@@ -1,7 +1,7 @@
 {
   "name": "token-todo",
   "version": "0.2.0",
-  "description": "A user-invoked Codex skill for converting an eligible, time-bounded resource envelope into current-value engineering progress without quota or billing automation.",
+  "description": "A portable, user-invoked Agent Skill for converting an eligible, time-bounded resource envelope into current-value engineering progress without quota or billing automation.",
   "author": {
     "name": "Rethymus",
     "url": "https://github.com/Rethymus"

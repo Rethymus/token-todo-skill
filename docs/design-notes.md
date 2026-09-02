@@ -18,7 +18,7 @@ This document records the public practices that informed Token Todo and how they
 
 ### One portable skill, one optional package
 
-The canonical capability is `skills/token-todo`. The root plugin manifest gives Codex a stable package identity without making the skill depend on account telemetry, a scheduler, an MCP server, an app connector, or a runtime service. Hosts that understand the Agent Skills layout can install only the skill directory.
+The canonical capability is the host-neutral `skills/token-todo` directory. The root plugin manifest gives Codex an optional stable package identity without making the skill depend on account telemetry, a scheduler, an MCP server, an app connector, or a runtime service. Hosts that understand the Agent Skills layout can install only the skill directory.
 
 ### Resource pressure is a constraint, not a product goal
 

@@ -1,0 +1,30 @@
+name: Skill improvement
+description: Propose a general trigger, decision, documentation, or evaluation improvement.
+title: "[Proposal]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: General problem
+      description: Describe the recurring resource-allocation or safety failure without embedding private incident details.
+    validations:
+      required: true
+  - type: textarea
+    id: current-requirement
+    attributes:
+      label: Present-tense requirement
+      description: What should an agent decide or produce now, and why would it remain valuable without expiry pressure?
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Proposed evaluation scenario
+      description: Include a trigger or non-trigger prompt plus observable expected and forbidden decisions.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Triggering or compatibility tradeoffs

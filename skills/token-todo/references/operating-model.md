@@ -10,6 +10,12 @@ AI coding creates a new resource-allocation problem: a user may have a temporary
 
 The skill exists to help the user choose a small amount of work that remains worthwhile if the window closes early, while protecting the next workday and honoring provider, team, and billing boundaries.
 
+## Current-value rule
+
+An expiring window creates a scheduling opportunity, not a project requirement. Every selected task must have a present-tense reason tied to the current project: a requirement, acceptance check, known maintenance risk, dependency, project standard, or explicitly approved outcome with a substantive project purpose. Approval sets scope; it does not make expiry-only work valuable. Ask whether the task would still be worth doing if the window were not closing. If not, reject it rather than inventing work to consume capacity.
+
+When a task or implementation direction has already been rejected, reconstruct the current target from the trusted project state and simplify the affected slice from its root. Do not preserve a wrapper, fallback, name, test, or ledger entry merely because it appeared in the correction history. Preserve history only when current compatibility, migration, security, compliance, public API, audit, or rollout behavior depends on it.
+
 ## User profiles
 
 Do not infer a profile from the repository name, operating-system locale, code language, or account. Ask the user to state only the fields that matter for the current run. A profile may be kept in the project-local ledger, but account identifiers and exact billing data should not be stored there.
@@ -35,6 +41,8 @@ Useful profile fields are: timezone, working hours or next-workday boundary, pro
 
 The user may invoke the skill for a plan-only pass, a ledger-maintenance pass, a Goal draft, or an approved execution pass. The activation itself never grants write permission.
 
+An explicit invocation is a routing signal, not evidence that the user has eligible capacity. The run still needs a user-stated resource envelope before it can move beyond qualitative planning.
+
 ### Do not activate for these jobs
 
 - Reading or estimating the user's actual account quota, reset timer, billing status, or provider-side usage.
@@ -53,6 +61,7 @@ If a request is ambiguous, explain the boundary and ask for a compact envelope r
 - Convert user-offered eligible capacity into high-value, bounded engineering progress.
 - Make tradeoffs visible: value, risk, effort, wall-clock time, uncertainty, reserve, and deadline buffer.
 - Keep the project backlog useful after the resource window expires.
+- Keep every selected task and retained ledger item justified by current project value rather than expiry pressure alone.
 - Require explicit approval, small checkpoints, verification, and a known rollback route.
 - Support plan/Goal workflows without pretending that a Goal is a quota monitor or a guarantee of completion.
 - Work across languages, frameworks, and repositories using project-local context rather than provider-specific integrations.
@@ -77,3 +86,4 @@ Track qualitative quality signals rather than provider telemetry:
 - verification results and unknowns are visible;
 - no overage, shared-capacity, fair-use, or policy boundary was crossed;
 - unfinished work is accurately labeled rather than hidden in a partial diff.
+- stale, duplicate, and expiry-only candidates are not carried forward as if they were delivered value.

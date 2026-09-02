@@ -13,6 +13,8 @@ The skill must preserve four invariants:
 3. **Evidence:** every delivered result has a diff, check, or other observable verification.
 4. **Recoverability:** the approved change has a specific rollback or safe resume path.
 
+It also applies a current-value invariant: the selected work and every retained artifact must serve the approved present-tense target, a valid project standard, an operational obligation, or an explicitly approved outcome with a substantive project purpose. Approval alone does not create value, and expiry pressure alone is not a reason to write.
+
 ## Approval contract
 
 Before writing, present and obtain approval for all of the following:
@@ -21,6 +23,7 @@ Before writing, present and obtain approval for all of the following:
 Approval request
 - Project and branch/worktree:
 - Approved task IDs:
+- Current target and reason:
 - In scope:
 - Explicitly out of scope:
 - Resource source and user-stated cap:
@@ -47,6 +50,8 @@ Before a write:
 4. Limit the file list to the approved scope and keep unrelated uncommitted work intact.
 5. Do not use broad destructive commands as a shortcut. Never reset or clean a repository to erase ambiguity.
 
+If the approved task exposes a wrong architecture, data model, interface, or other root assumption, replace the affected slice from the trusted baseline and simplify downstream residue within scope. Do not add a compensating layer solely because the rejected direction already appears in the diff. Reimplementation does not authorize discarding unrelated work.
+
 If Git is unavailable, make a backup or explicit recovery plan before a non-trivial write. If no trustworthy recovery path exists, keep the run plan-only.
 
 ## Execution and checkpoints
@@ -54,6 +59,7 @@ If Git is unavailable, make a backup or explicit recovery plan before a non-triv
 - Change one atomic task at a time.
 - Checkpoint before the timebox or capacity boundary, after a meaningful unit, and whenever assumptions change.
 - Run the narrowest relevant check first. Expand checks only if the envelope and approval permit it.
+- Re-check the current-value reason and acceptance target at each checkpoint; pause if the task is now justified only by expiry pressure.
 - Treat package installation, network access, generated files, configuration changes, commits, pushes, PRs, deployments, and messages to external systems as separate side effects.
 - Do not use secrets, credentials, private keys, or account pages. If a task requires them, stop and ask for a safer design.
 - Do not lower tests, disable security controls, bypass reviews, or weaken provider/organizational controls to make a task fit.

@@ -1,8 +1,8 @@
 interface:
   display_name: "Token Todo"
-  short_description: "Plan safe, bounded work from eligible capacity"
+  short_description: "Choose current-value work within a safe resource envelope"
   brand_color: "#0F766E"
-  default_prompt: "Use $token-todo to propose a safe, reversible maintenance plan within my stated resource and time budget."
+  default_prompt: "Use $token-todo to build a current-value, safe, reversible maintenance plan within my stated resource and time budget."
 
 policy:
   allow_implicit_invocation: false

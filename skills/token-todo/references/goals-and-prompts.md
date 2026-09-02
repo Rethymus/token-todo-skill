@@ -14,6 +14,7 @@ Project and scope:
 - Allowed task IDs: [TT-###, TT-###]
 - Allowed paths: [paths]
 - Out of scope: [features, production, migrations, etc.]
+- Current target and reason: [what should be true now, and why it remains valuable without expiry pressure]
 
 User-provided resource envelope:
 - Source: [periodic plan / temporary grant / other]
@@ -25,6 +26,7 @@ User-provided resource envelope:
 
 Execution rules:
 - Plan and restate the scope before the first write.
+- Re-check the current target and reason before each checkpoint; do not continue an expiry-only task.
 - Use a branch/worktree when the task is medium-risk or multi-file.
 - Work one atomic task at a time and checkpoint after each.
 - Run [acceptance checks] after each relevant change.
@@ -35,6 +37,7 @@ Completion evidence:
 - Summarize files changed, checks and results, remaining uncertainty, and the exact rollback route.
 - If unfinished, mark the task paused or blocked with a next action.
 ```
+
 ## Canonical Goal template (简体中文)
 
 ```text
@@ -47,6 +50,7 @@ Goal：Token Todo — [项目] 的有界维护
 - 允许的任务 ID：[TT-###、TT-###]
 - 允许修改的路径：[路径]
 - 明确排除：[新功能、生产环境、迁移等]
+- 当前目标与理由：[现在应达到什么状态，以及即使没有额度压力为什么仍有价值]
 
 用户提供的资源包络：
 - 资源来源：[周期性计划 / 临时赠送 / 其他]
@@ -58,6 +62,7 @@ Goal：Token Todo — [项目] 的有界维护
 
 执行规则：
 - 第一次写入前先复述范围与计划。
+- 每个检查点前重新检查当前目标与理由；不要继续只因额度即将失效而存在的任务。
 - 中风险或多文件修改使用分支/工作树。
 - 一次只处理一个原子任务，每个任务后建立检查点。
 - 每个相关修改后运行：[验收命令]

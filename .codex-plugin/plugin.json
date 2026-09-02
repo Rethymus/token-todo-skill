@@ -1,7 +1,7 @@
 {
   "name": "token-todo",
-  "version": "0.1.0",
-  "description": "A user-invoked Codex skill for converting eligible, time-bounded coding capacity into safe, reviewable engineering progress.",
+  "version": "0.2.0",
+  "description": "A user-invoked Codex skill for converting an eligible, time-bounded resource envelope into current-value engineering progress without quota or billing automation.",
   "author": {
     "name": "Rethymus",
     "url": "https://github.com/Rethymus"
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Token Todo",
     "shortDescription": "Turn eligible expiring capacity into safe engineering progress",
-    "longDescription": "Plan and execute bounded project maintenance from a user-stated resource and time envelope. Token Todo uses explicit approval, conservative estimates, small checkpoints, verification, and rollback; it does not inspect account quotas or run background monitoring.",
+    "longDescription": "Build a resource-and-work contract, select maintenance with a present-tense project reason, and execute only explicitly approved bounded slices with checkpoints, verification, and rollback. Token Todo does not inspect account quotas, monitor resets, consume paid or shared capacity, or run background work.",
     "developerName": "Rethymus",
     "category": "Developer Tools",
     "capabilities": [
@@ -31,7 +31,7 @@
     ],
     "websiteURL": "https://github.com/Rethymus/token-todo-skill",
     "defaultPrompt": [
-      "Use Token Todo to plan a bounded, reversible maintenance sprint from a user-stated resource and time budget.",
+      "Use Token Todo to build a current-value, bounded maintenance plan from a user-stated resource and time budget.",
       "Use Token Todo to curate this project's low-risk backlog without reading account quota data."
     ],
     "brandColor": "#0F766E",

@@ -20,18 +20,23 @@ overage_policy: <default: deny>
 shared_capacity: <default: deny>
 ```
 
+The envelope is a resource contract, not a request to maximize consumption. Also identify the target outcome, acceptance check, allowed paths, and non-goals for the run. If `eligible_capacity` is a range, commit only against its conservative lower bound; treat the upper bound as an optional planning scenario, never as permission to consume the reserve. If there is no defensible lower bound, stay plan-only.
+
 Use abstract `work units` or the user's own units. They are planning units, not provider tokens and not a billing estimate. Never convert a provider's undocumented plan into token, request, or dollar math.
 
 Hard constraints are applied before ranking:
 
 ```text
-spendable_capacity = max(0, eligible_capacity - next_workday_reserve)
+commitment_capacity = user-stated cap or conservative lower bound of the stated range
+spendable_capacity = max(0, commitment_capacity - next_workday_reserve)
 usable_time = eligible_until - time_reserve - current_time_in_user_timezone
 ```
 
 If the user does not state a reserve, do not execute. For a proposal only, show a clearly labeled conservative scenario that leaves at least half of the stated eligible capacity and at least 60 minutes of wall-clock time untouched, then request confirmation. If the capacity unit, deadline, timezone, or ownership is unknown, keep the result qualitative and plan-only.
 
 Always leave enough time for one verification checkpoint and a rollback decision. Do not treat the last minute before expiry as usable execution time.
+
+Before scoring, reject a candidate that has no current project reason, no observable acceptance check, no rollback route, or whose only justification is that capacity is about to expire. Expiry may influence deadline fit among already-valid candidates; it never creates value or overrides risk.
 
 ## 2. Resource-source rules
 
@@ -63,7 +68,7 @@ Report a lower and upper bound, confidence (`high`, `medium`, or `low`), and the
 
 First reject candidates that do not fit the hard capacity/time constraints, lack a validation method, lack a rollback path, or violate the resource-source policy. For the survivors, use ordinal judgments rather than fake precision:
 
-1. user value: impact on current work and maintenance burden;
+1. current value: impact on current work and maintenance burden;
 2. unblock value: whether it removes a known blocker or reduces future risk;
 3. deadline fit: whether waiting loses the opportunity without creating urgency-driven risk;
 4. verification strength: how easily correctness can be checked;
@@ -71,7 +76,7 @@ First reject candidates that do not fit the hard capacity/time constraints, lack
 6. uncertainty and risk: unknown behavior, sensitive surfaces, or cross-cutting effects;
 7. context-switch cost: how much new domain knowledge or setup is needed.
 
-Prefer high value density: meaningful outcome per unit of effort, time, and risk. Use this as an ordering heuristic, not a numerical claim:
+Prefer high value density: meaningful current outcome per unit of effort, time, and risk. Use this as an ordering heuristic, not a numerical claim:
 
 ```text
 value density ~= (impact + unblock + urgency + confidence + reversibility)
@@ -99,6 +104,7 @@ These are defaults, not entitlements. High-risk work is never selected solely be
 - **Dependency-aware sequencing:** do the smallest prerequisite that unlocks later work; do not start a broad feature to justify a deadline.
 - **Checkpointed small batches:** after each atomic task, compare the forecast, diff, tests, and risk with the approved envelope.
 - **Value-density ordering:** choose high-value, high-confidence work before low-confidence “maybe useful” work.
+- **Current-reason review:** before each checkpoint, re-check that the next task and every retained artifact still serve the approved current target; remove expiry-only residue from the plan or ledger.
 - **Context locality:** stay in one project and one theme unless the user explicitly requests a multi-project allocation.
 - **Fairness and rotation:** for an explicitly named multi-project run, allocate a separate cap per project and rotate only at checkpoints; never let one project consume an unbounded remainder.
 - **Anti-gaming:** do not add artificial TODOs, run redundant tests, retry failures without new information, fan out requests, or use parallelism to evade a cap.

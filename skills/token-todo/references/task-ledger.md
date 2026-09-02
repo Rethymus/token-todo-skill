@@ -8,6 +8,8 @@ The ledger is an optional, human-readable memory for one project. Use `.codex/to
 - Store task intent and project facts, not secrets, account IDs, access tokens, exact billing records, or guessed quota balances.
 - Every item must be understandable without this skill being loaded.
 - Do not turn every `TODO` or `FIXME` into a task. Keep only items with a concrete outcome, a reason to do them, a bounded scope, and evidence for why they matter.
+- Record a present-tense reason for every candidate. Expiry, unused capacity, a desire to fill the ledger, or approval without a project purpose is not sufficient by itself.
+- Keep the current acceptance check and rollback route close to the task. A task that cannot be verified or safely undone is not a default harvest candidate.
 - Re-review stale items as the project changes. Remove or close candidates that would now cause regressions or duplicate current work.
 - Use stable IDs such as `TT-001`; never reuse an ID for a different outcome.
 
@@ -34,9 +36,9 @@ Last reviewed: YYYY-MM-DD
 
 ## Items
 
-| ID | Outcome and scope | Value | Risk | Effort | Forecast | Verify | Rollback | Depends on | Eligible until | Status | Reviewed |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TT-001 | <one concrete outcome> | high | low | S | 2-5 turns / 25-60m | <command or inspection> | <specific revert path> | none | <date/time> | candidate | <date> |
+| ID | Outcome and scope | Current reason | Value | Risk | Effort | Forecast | Verify | Rollback | Depends on | Eligible until | Status | Reviewed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| TT-001 | <one concrete outcome> | <current requirement, risk, or approved outcome> | high | low | S | 2-5 turns / 25-60m | <command or inspection> | <specific revert path> | none | <date/time> | candidate | <date> |
 ```
 
 The exact table columns may be adapted to the project, but do not remove `ID`, outcome/scope, risk, forecast, validation, rollback, status, or review date.
@@ -87,4 +89,6 @@ proposed -> expired when the eligibility window passes before approval
 
 ## Review and pruning
 
-At the beginning of each Token Todo run, review the candidate items against current project direction. Update or archive items when their assumptions no longer hold. At the end, record the evidence and the next smallest action; never leave a task marked delivered with unverified or unrelated changes.
+At the beginning of each Token Todo run, review the candidate items against current project direction. Ask of every item, “If the resource window were not closing, would this still be worth doing?” Update, archive, or remove items when their assumptions no longer hold, when they are stale or duplicated, or when expiry is their only reason. At the end, record the evidence and the next smallest action; never leave a task marked delivered with unverified or unrelated changes.
+
+Keep correction chronology out of the canonical task description unless it is required for a current migration, compatibility, security, compliance, public-API, audit, or rollout obligation. When such history is retained, state the current operational reason and the removal or review condition.

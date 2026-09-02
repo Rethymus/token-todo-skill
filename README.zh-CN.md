@@ -1,6 +1,6 @@
 # Token Todo
 
-[English](README.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
 [![校验状态](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml)
 [![许可证：MIT](https://img.shields.io/badge/License-MIT-0F766E.svg)](LICENSE)
@@ -18,14 +18,14 @@ AI coding 让一个新的资源分配问题变得明显：容量可能是临时�
         -> 小步检查点修改 -> 验证 -> 可回滚交接
 ```
 
-项目任务列表是可选的，默认放在 `.codex/token-todo.md`。它不是全局账户记录，也不是隐藏的跨项目队列。
+这个 Skill 采用了良好纠错流程所需要的同一种当前状态纪律：资源窗口只是上下文，项目结果才是目标。项目任务列表是可选的，默认放在 `.codex/token-todo.md`；它不是全局账户记录，也不是隐藏的跨项目队列。
 
 ## Skill 做什么
 
 Token Todo 引导 Agent 连续完成五个决策：
 
 1. 建立资源与工作契约：当前目标、合规来源、上限、截止时间、时区、预留、时限、允许的副作用、验收标准、非目标、可信基线和受保护状态。
-2. 拒绝唯一理由是额度即将失效的工作，然后按当前价值、验证强度、可逆性、风险和截止适配度排序维护候选。
+2. 拒绝唯一理由是额度即将失效的工作，然后按当前价值、验证强度、可逆性、风险、依赖解锁价值和截止适配度排序维护候选。
 3. 选择最小的有用形态：只做规划、整理 ledger、局部原子修补、有界维护切片、重做受影响切片，或先澄清。
 4. 要求明确批准，只在获准路径内以小检查点执行，并在范围、风险、估算、预算、时间或政策发生漂移时停止。
 5. 用证据、明确的回滚或恢复路径、准确的 ledger 状态和当前结果交付收尾，而不是汇报消耗了多少容量的故事。
@@ -41,20 +41,11 @@ Token Todo 引导 Agent 连续完成五个决策：
 
 完整的 Agent 指令位于 [`skills/token-todo/SKILL.md`](skills/token-todo/SKILL.md)。
 
-## 它明确不做什么
-
-- 不读取或推断账户额度、重置时间、计费状态、模型限制或服务商侧用量。
-- 不安排周期性检查、不唤醒后续任务、不发提醒，也不运行无人值守的后台队列。
-- 不使用付费 overage、团队/共享额度、多账户、刷请求或任何规避公平使用的方式。
-- 不会仅因为资源窗口即将结束，就选择生产环境、凭据、鉴权、计费、迁移、破坏性或大范围臆测性工作。
-- 不会为了消耗容量而新增虚假 TODO、重复测试、无意义重试或扇出并行。
-- 未经单独明确批准，不提交、推送、创建 PR、部署或联系外部服务。
-
 ## 安装
 
 ### Skills CLI
 
-适用于支持开放 Agent Skills 生态的宿主：
+适用于开放 Agent Skills 生态所支持的宿主：
 
 ```bash
 npx skills add Rethymus/token-todo-skill --skill token-todo -g
@@ -70,23 +61,27 @@ npx skills add Rethymus/token-todo-skill --skill token-todo -g
 请使用 $skill-installer 安装 https://github.com/Rethymus/token-todo-skill/tree/main/skills/token-todo
 ```
 
-本 Skill 配置为仅显式调用。如果宿主只在启动时发现个人 Skill，请重启或新建任务。
+如果宿主只在启动时发现个人 Skill，请重启或新建任务。
+
+### 手动安装
+
+将 [`skills/token-todo`](skills/token-todo) 复制到 Agent 宿主所使用的个人 Skill 目录。常见位置包括 Agent Skills 兼容宿主的 `~/.agents/skills/token-todo`，以及 Codex 安装中的 `$CODEX_HOME/skills/token-todo`。
+
+仓库同时包含 [Codex Plugin 清单](.codex-plugin/plugin.json)，因此可以作为仅含 Skill 的轻量 Plugin 打包或分发。它有意不包含 MCP 服务、App 连接器、Hook、运行时服务或账户集成。
 
 ### Codex skill-only plugin
 
-仓库包含 `.codex-plugin/plugin.json` 清单。在 Codex 中添加仓库作为 marketplace 来源，然后在 Plugins Directory 安装 `Token Todo`：
+在 Codex 中把本仓库添加为 marketplace 来源，然后在 Plugins Directory 安装 `Token Todo`：
 
 ```text
 codex plugin marketplace add Rethymus/token-todo-skill --ref main
 ```
 
-如果使用本地 checkout，仓库也包含 `.agents/plugins/marketplace.json`：
+如果使用本地 checkout，仓库包含 `.agents/plugins/marketplace.json`：
 
 ```text
 codex plugin marketplace add ./path/to/token-todo-skill
 ```
-
-这个包不包含 MCP 服务、App 连接器、Hook、运行时服务或账户集成。
 
 ## 使用
 
@@ -112,7 +107,24 @@ $token-todo 只做规划，不要写文件。
 只批准方案 A 的 TT-014 和 TT-018，遵守上述上限和时限。保留上述预留。如果范围、风险、估算、目标或资源来源发生变化就停止。
 ```
 
+整理 ledger 时，应先要求 Agent 提议确切的新增、删除或状态变更。需要持久 Goal 时，使用 [`goals-and-prompts.md`](skills/token-todo/references/goals-and-prompts.md) 中的模板；Goal 必须重复范围、预留、验收检查、回滚方式和停止条件。
+
 可用的控制语句包括：`只做规划`、`现在停止`、`当前安全的原子步骤完成后暂停`、`只从上次检查点恢复 TT-014，并重新规划和批准`、`只回滚 TT-014 已批准的 Token Todo 改动`。
+
+## 它保护什么、拒绝什么
+
+Token Todo 保护用户的决定权、下一个工作日的预留、仓库中的无关改动、当前项目方向、正常的审查与验证标准，以及明确的恢复路径。它拒绝把截止压力变成新的产品需求。
+
+它不会：
+
+- 读取或推断账户额度、重置时间、计费状态、模型限制或服务商侧用量；
+- 安排周期性检查、唤醒后续任务、发送提醒，或运行无人值守的后台队列；
+- 使用付费 overage、团队/共享额度、多账户、刷请求或任何规避公平使用的方式；
+- 仅因为资源窗口即将结束，就选择生产环境、凭据、鉴权、计费、迁移、破坏性或大范围臆测性工作；
+- 为了消耗容量而新增虚假 TODO、重复测试、无意义重试或扇出并行；或
+- 未经单独明确批准，提交、推送、创建 PR、部署或联系外部服务。
+
+只有当当前的兼容性、迁移、公共 API、安全、合规、审计或可逆发布行为依赖历史机制时，才保留最小必要部分，并写明当前理由。无关或用户自有改动始终受到保护。
 
 ## 默认调度模型
 
@@ -140,22 +152,6 @@ candidate -> proposed -> approved -> in_progress -> checkpoint
 
 出现以下情况就应在最早安全边界停止：用户撤回批准；达到硬上限或时限；截止缓冲不足以验证和回滚；可能覆盖无关改动；测试回归；出现凭据；或下一步需要 overage、共享额度、刷请求或政策例外。
 
-## 仓库结构
-
-```text
-.codex-plugin/plugin.json          Codex skill-only plugin 元数据
-.agents/plugins/marketplace.json   本地/Git marketplace 入口
-skills/token-todo/                 可移植 Agent Skill
-  SKILL.md                          精简的 Agent 指令
-  agents/openai.yaml                Codex 展示元数据与显式策略
-  references/                       按模式加载的政策与提示词手册
-tests/scenarios.json                与宿主无关的行为评估语料
-tests/trigger-cases.md              人工前向测试复核
-scripts/validate_repo.py            无第三方依赖的仓库校验器
-docs/design-notes.md                参考来源与设计决策
-README.md / README.zh-CN.md         英文与简体中文指南
-```
-
 ## 验证
 
 使用 Python 3.9 或更高版本运行仓库校验器；它不依赖第三方包：
@@ -170,13 +166,29 @@ python scripts/validate_repo.py
 python <path-to-codex>/skills/.system/skill-creator/scripts/quick_validate.py skills/token-todo
 ```
 
-结构校验器会检查清单、Agent Skills 前置元数据、Codex 元数据、中英文文档链接、许可证和行为场景。它不会假装能够自动证明模型行为。场景评估方法见 [`tests/README.md`](tests/README.md)。
+仓库校验器会检查 Plugin 清单、marketplace 入口、Agent Skills 前置元数据、Codex 展示元数据、中英文文档链接、许可证和行为场景。它不会假装能够自动证明模型行为。场景评估方法见 [`tests/README.md`](tests/README.md)。
+
+## 仓库结构
+
+```text
+.codex-plugin/plugin.json          Codex skill-only plugin 元数据
+.agents/plugins/marketplace.json   本地/Git marketplace 入口
+skills/token-todo/                 可移植 Agent Skill
+  SKILL.md                          精简的 Agent 指令
+  agents/openai.yaml                Codex 展示元数据与调用策略
+  references/                       按模式加载的政策与提示词手册
+tests/scenarios.json                与宿主无关的行为评估语料
+tests/trigger-cases.md              人工前向测试复核
+scripts/validate_repo.py            无第三方依赖的结构校验器
+docs/design-notes.md                参考来源与设计决策
+README.md / README.zh-CN.md         英文与简体中文指南
+```
 
 ## 设计来源
 
-本仓库遵循 [OpenAI 构建 Skill 指南](https://learn.chatgpt.com/docs/build-skills)、[Agent Skills 规范](https://agentskills.io/specification)、[OpenAI Plugins](https://github.com/openai/plugins)、[Anthropic Skills](https://github.com/anthropics/skills)、[Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills) 和 [Superpowers](https://github.com/obra/superpowers) 的公开约定。本仓库的结构，以及当前状态、契约优先的清理规则，也参考了 [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction)；后者是独立 Skill，不是运行时依赖。
+README 的结构和面向用户的说明方式参考了 [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction) 所采用的公开实践：先说明问题和标准，再说明连续决策、使用边界、安装、验证、仓库结构、来源和治理。当前价值、可信基线、受保护状态、根因优先、按比例验证和反事实审计等原则被适配到 Token Todo 的资源调度问题中；参考仓库保持独立，不是运行时依赖。
 
-这些来源影响了打包方式、渐进式披露、触发条件写法、人类可读 README 结构、当前价值保留规则和基于场景的评估方式。本仓库的实现与文字均为原创，没有内嵌第三方 Skill 代码。逐项采纳记录见 [`docs/design-notes.md`](docs/design-notes.md)。
+本仓库同时遵循 [OpenAI 构建 Skill 指南](https://learn.chatgpt.com/docs/build-skills)、[Agent Skills 规范](https://agentskills.io/specification)、[OpenAI Plugins](https://github.com/openai/plugins)、[Anthropic Skills](https://github.com/anthropics/skills)、[Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills) 和 [Superpowers](https://github.com/obra/superpowers) 的公开约定。本仓库的实现与文字均为原创，没有内嵌第三方 Skill 代码。逐项采纳记录见 [`docs/design-notes.md`](docs/design-notes.md)。
 
 ## 贡献与安全
 

@@ -1,6 +1,6 @@
 # Token Todo
 
-[简体中文](README.zh-CN.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
 [![Validate](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/Rethymus/token-todo-skill/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0F766E.svg)](LICENSE)
@@ -11,21 +11,21 @@ An Agent Skill for turning a user-stated, eligible, time-bounded coding-capacity
 
 ## Why this exists
 
-AI coding makes a new resource-allocation problem visible: capacity may be temporary, reset-bound, or close to expiry, while the safe objective is not to exhaust it. Token Todo helps the user choose work that is worth doing even if the window closes early, protects the next workday's reserve, and produces a clean handoff:
+AI coding makes a new resource-allocation problem visible: capacity may be temporary, reset-bound, or close to expiry, while the safe objective is not to exhaust it. Token Todo helps the user choose work that would still be worth doing if the window closed early, protect the next workday's reserve, and leave a clean handoff:
 
 ```text
 user-stated resource envelope -> current-value task choice -> explicit approval
         -> small checkpointed change -> verification -> reversible handoff
 ```
 
-The project-local task list is optional and lives in `.codex/token-todo.md`. It is not a global account record or a hidden cross-project queue.
+The skill applies the same current-state discipline that a good correction workflow needs: the resource window is context, while the project outcome is the target. The project-local task list is optional and lives in `.codex/token-todo.md`; it is not a global account record or hidden cross-project queue.
 
 ## What the skill does
 
 Token Todo guides an agent through five linked decisions:
 
 1. Build a resource-and-work contract: current target, eligible source, cap, expiry, timezone, reserve, timebox, allowed effects, acceptance, non-goals, trusted baseline, and protected state.
-2. Reject work whose only justification is expiring capacity, then rank current-value maintenance candidates by impact, verification strength, reversibility, risk, and deadline fit.
+2. Reject tasks whose only reason is expiring capacity, then rank current-value maintenance candidates by impact, verification strength, reversibility, risk, dependency value, and deadline fit.
 3. Choose the smallest useful shape: plan-only, ledger curation, a local atomic patch, a bounded maintenance slice, an affected-slice rebuild, or clarification first.
 4. Require explicit approval, execute only approved paths in small checkpoints, and stop on scope, risk, estimate, budget, time, or policy drift.
 5. Close with evidence, a precise rollback or resume route, an accurate ledger state, and a current-result handoff rather than a story about consumed capacity.
@@ -41,26 +41,17 @@ Token Todo guides an agent through five linked decisions:
 
 Read the complete agent-facing instructions in [`skills/token-todo/SKILL.md`](skills/token-todo/SKILL.md).
 
-## What it does not do
-
-- It does not inspect or infer account quota, reset time, billing status, model limits, or provider-side usage.
-- It does not schedule recurring checks, wake up later, send reminders, or run an unattended background queue.
-- It does not use paid overage, team/shared capacity, multiple accounts, request flooding, or fair-use bypasses.
-- It does not select production, credential, authentication, billing, migration, destructive, or broad speculative work merely because a resource window is closing.
-- It does not add artificial TODOs, redundant tests, pointless retries, or fan-out to consume capacity.
-- It does not commit, push, open a pull request, deploy, or contact external services without separate explicit approval.
-
 ## Installation
 
 ### Skills CLI
 
-For hosts that support the open Agent Skills ecosystem:
+For hosts supported by the open Agent Skills ecosystem:
 
 ```bash
 npx skills add Rethymus/token-todo-skill --skill token-todo -g
 ```
 
-Omit `-g` for a project-local install when supported by the host.
+Omit `-g` to install into the current project when supported by the host.
 
 ### Codex skill installer
 
@@ -70,23 +61,27 @@ Ask Codex:
 Use $skill-installer to install https://github.com/Rethymus/token-todo-skill/tree/main/skills/token-todo
 ```
 
-The skill is configured for explicit invocation only. Restart or open a new task if the host discovers personal skills only at startup.
+Restart or open a new task if the host only discovers personal skills at startup.
+
+### Manual installation
+
+Copy [`skills/token-todo`](skills/token-todo) into the personal-skill directory used by your agent host. Common locations include `~/.agents/skills/token-todo` for Agent Skills-compatible hosts and `$CODEX_HOME/skills/token-todo` for Codex installations.
+
+The repository also includes a [Codex plugin manifest](.codex-plugin/plugin.json), so it can be packaged or distributed as a skill-only plugin. It deliberately contains no MCP server, app connector, hook, runtime service, or account integration.
 
 ### Codex skill-only plugin
 
-The repository includes a `.codex-plugin/plugin.json` manifest. In Codex, add the repository as a marketplace source and install `Token Todo` from the Plugins Directory:
+In Codex, add this repository as a marketplace source and install `Token Todo` from the Plugins Directory:
 
 ```text
 codex plugin marketplace add Rethymus/token-todo-skill --ref main
 ```
 
-For a local checkout, the repository also includes `.agents/plugins/marketplace.json`:
+For a local checkout, the repository includes `.agents/plugins/marketplace.json`:
 
 ```text
 codex plugin marketplace add ./path/to/token-todo-skill
 ```
-
-The package has no MCP server, app connector, hook, runtime service, or account integration.
 
 ## Usage
 
@@ -112,7 +107,24 @@ Approve only a named scope:
 Approve option A for TT-014 and TT-018 only, within the stated cap and timebox. Leave the stated reserve untouched. Stop if scope, risk, estimate, target, or resource source changes.
 ```
 
+For ledger curation, ask the agent to propose exact additions, removals, or status changes first. For a durable Goal, use the templates in [`goals-and-prompts.md`](skills/token-todo/references/goals-and-prompts.md); the Goal must repeat the scope, reserve, acceptance checks, rollback, and stop conditions.
+
 Useful control signals include `plan only`, `stop now`, `pause after the current safe atomic step`, `resume only TT-014 from the last checkpoint with a fresh approval`, and `roll back only the approved Token Todo changes for TT-014`.
+
+## What it protects—and what it refuses
+
+Token Todo protects the user's authority, next-workday reserve, unrelated repository changes, current project direction, normal review and verification standards, and a precise recovery path. It refuses to turn expiry pressure into a new product requirement.
+
+It does not:
+
+- inspect or infer account quota, reset time, billing status, model limits, or provider-side usage;
+- schedule recurring checks, wake up later, send reminders, or run an unattended background queue;
+- use paid overage, team/shared capacity, multiple accounts, request flooding, or fair-use bypasses;
+- select production, credential, authentication, billing, migration, destructive, or broad speculative work merely because a resource window is closing;
+- add artificial TODOs, redundant tests, pointless retries, or fan-out to consume capacity; or
+- commit, push, open a pull request, deploy, or contact external services without separate explicit approval.
+
+Historical-looking mechanisms are retained only when current compatibility, migration, public API, security, compliance, audit, or reversible-rollout behavior depends on them. Unrelated or user-owned changes remain protected.
 
 ## Scheduling defaults
 
@@ -140,22 +152,6 @@ Before writing, the agent records the trusted baseline and protected unrelated c
 
 The run stops when approval is withdrawn, a hard cap or timebox is reached, the deadline buffer is too small for verification and rollback, unrelated changes could be overwritten, tests regress, credentials become relevant, or the next step would require overage, shared capacity, request flooding, or a policy exception.
 
-## Repository structure
-
-```text
-.codex-plugin/plugin.json          Codex skill-only plugin metadata
-.agents/plugins/marketplace.json   local/Git-backed marketplace entry
-skills/token-todo/                 portable Agent Skill
-  SKILL.md                          concise agent-facing procedure
-  agents/openai.yaml                Codex display metadata and explicit policy
-  references/                       mode-specific policy and prompt cookbook
-tests/scenarios.json                host-neutral behavioral evaluation corpus
-tests/trigger-cases.md              human-readable forward-test review
-scripts/validate_repo.py            dependency-free repository validator
-docs/design-notes.md                prior art and design decisions
-README.md / README.zh-CN.md         English and Simplified Chinese guides
-```
-
 ## Validation
 
 Run the repository validator with Python 3.9 or later; it has no third-party dependencies:
@@ -170,13 +166,29 @@ Also run the host's Agent Skills validator against the actual skill directory:
 python <path-to-codex>/skills/.system/skill-creator/scripts/quick_validate.py skills/token-todo
 ```
 
-The structural validator checks manifests, Agent Skills frontmatter, Codex metadata, bilingual documentation links, license, and behavioral scenarios. It does not pretend to measure model behavior. The scenario procedure is documented in [`tests/README.md`](tests/README.md).
+The repository validator checks the plugin manifest, marketplace entry, Agent Skills frontmatter, Codex metadata, bilingual documentation links, license, and behavioral scenarios. It does not pretend to measure model behavior. The scenario evaluation procedure is documented in [`tests/README.md`](tests/README.md).
+
+## Repository structure
+
+```text
+.codex-plugin/plugin.json          Codex skill-only plugin metadata
+.agents/plugins/marketplace.json   local/Git-backed marketplace entry
+skills/token-todo/                 portable Agent Skill
+  SKILL.md                          concise agent-facing procedure
+  agents/openai.yaml                Codex display metadata and invocation policy
+  references/                       mode-specific policy and prompt cookbook
+tests/scenarios.json                host-neutral behavioral evaluation corpus
+tests/trigger-cases.md              human-readable forward-test review
+scripts/validate_repo.py            dependency-free structural validator
+docs/design-notes.md                prior art and design decisions
+README.md / README.zh-CN.md         English and Simplified Chinese guides
+```
 
 ## Design provenance
 
-This repository follows public conventions from [OpenAI's build-skills guidance](https://learn.chatgpt.com/docs/build-skills), the [Agent Skills specification](https://agentskills.io/specification), [OpenAI Plugins](https://github.com/openai/plugins), [Anthropic Skills](https://github.com/anthropics/skills), [Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills), and [Superpowers](https://github.com/obra/superpowers). The repository shape and current-state, contract-first cleanup rules were also informed by [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction), which is a separate skill and is not a runtime dependency.
+The README structure and product-facing documentation approach follow the public conventions visible in [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction): explain the problem, the operating standard, the linked decisions, use boundaries, installation, validation, repository structure, provenance, and governance in that order. The current-value, trusted-baseline, protected-state, root-first, proportional-validation, and counterfactual ideas were adapted to Token Todo's resource-scheduling problem; the reference repository remains separate and is not a runtime dependency.
 
-These sources informed packaging, progressive disclosure, trigger wording, human-facing README structure, current-value retention rules, and scenario-based evaluation. The implementation and prose in this repository are original; no third-party skill code is vendored. A source-by-source adoption record is available in [`docs/design-notes.md`](docs/design-notes.md).
+This repository also follows public conventions from [OpenAI's build-skills guidance](https://learn.chatgpt.com/docs/build-skills), the [Agent Skills specification](https://agentskills.io/specification), [OpenAI Plugins](https://github.com/openai/plugins), [Anthropic Skills](https://github.com/anthropics/skills), [Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills), and [Superpowers](https://github.com/obra/superpowers). The implementation and prose here are original; no third-party skill code is vendored. A source-by-source adoption record is available in [`docs/design-notes.md`](docs/design-notes.md).
 
 ## Contributing and security
 

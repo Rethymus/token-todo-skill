@@ -1,0 +1,20 @@
+{
+  "name": "token-todo",
+  "interface": {
+    "displayName": "Token Todo"
+  },
+  "plugins": [
+    {
+      "name": "token-todo",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# Local/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+
+# Do not commit local test output or private project ledgers from a checkout.
+.codex/

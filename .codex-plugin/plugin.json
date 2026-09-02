@@ -1,0 +1,40 @@
+{
+  "name": "token-todo",
+  "version": "0.1.0",
+  "description": "A user-invoked Codex skill for converting eligible, time-bounded coding capacity into safe, reviewable engineering progress.",
+  "author": {
+    "name": "Rethymus",
+    "url": "https://github.com/Rethymus"
+  },
+  "homepage": "https://github.com/Rethymus/token-todo-skill",
+  "repository": "https://github.com/Rethymus/token-todo-skill",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "agent-skills",
+    "planning",
+    "maintenance",
+    "resource-budget",
+    "safety",
+    "rollback"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Token Todo",
+    "shortDescription": "Turn eligible expiring capacity into safe engineering progress",
+    "longDescription": "Plan and execute bounded project maintenance from a user-stated resource and time envelope. Token Todo uses explicit approval, conservative estimates, small checkpoints, verification, and rollback; it does not inspect account quotas or run background monitoring.",
+    "developerName": "Rethymus",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Rethymus/token-todo-skill",
+    "defaultPrompt": [
+      "Use Token Todo to plan a bounded, reversible maintenance sprint from a user-stated resource and time budget.",
+      "Use Token Todo to curate this project's low-risk backlog without reading account quota data."
+    ],
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

@@ -186,7 +186,7 @@ README.md / README.zh-CN.md         英文与简体中文指南
 
 ## 设计来源
 
-README 的结构和面向用户的说明方式参考了 [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction) 所采用的公开实践：先说明问题和标准，再说明连续决策、使用边界、安装、验证、仓库结构、来源和治理。当前价值、可信基线、受保护状态、根因优先、按比例验证和反事实审计等原则被适配到 Token Todo 的资源调度问题中；参考仓库保持独立，不是运行时依赖。
+README 采用成熟开源 skill 仓库常见的面向产品的信息顺序：先说明问题和运行标准，再说明连续决策、使用边界、安装、验证、仓库结构、来源和治理。当前价值、可信基线、受保护状态、根因优先、按比例验证和反事实审计等原则，是 Token Todo 针对资源调度问题形成的自身规则。
 
 本仓库同时遵循 [OpenAI 构建 Skill 指南](https://learn.chatgpt.com/docs/build-skills)、[Agent Skills 规范](https://agentskills.io/specification)、[OpenAI Plugins](https://github.com/openai/plugins)、[Anthropic Skills](https://github.com/anthropics/skills)、[Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills) 和 [Superpowers](https://github.com/obra/superpowers) 的公开约定。本仓库的实现与文字均为原创，没有内嵌第三方 Skill 代码。逐项采纳记录见 [`docs/design-notes.md`](docs/design-notes.md)。
 

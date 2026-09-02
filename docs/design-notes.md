@@ -12,7 +12,7 @@ This document records the public practices that informed Token Todo and how they
 | [Anthropic Skills](https://github.com/anthropics/skills) | Progressive disclosure and allowing simple skills to remain self-contained | Core instructions stay compact; scheduling, ledger, safety, and Goal detail load only when needed |
 | [Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills) | Human-facing “use when,” installation, examples, structure, and per-skill metadata | Mirrored English/Chinese guides with trigger and non-trigger boundaries, installation paths, and repository map |
 | [Superpowers: writing-skills](https://github.com/obra/superpowers/blob/master/skills/writing-skills/SKILL.md) | Trigger descriptions should not become workflow shortcuts; pressure scenarios expose unsafe decisions | The explicit-only policy is kept in metadata, while scenario cases test tempting quota, expiry, and scope decisions |
-| [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction) | Contract-first current-state language, trusted baseline, protected state, current-reason retention, root-first cleanup, proportional validation, counterfactual audit, and current-result reporting | These principles are adapted to resource scheduling: build a resource-and-work contract, reject expiry-only tasks, preserve only operationally necessary history, and re-check current value at checkpoints. The repository was reviewed read-only and is not a runtime dependency or vendored source. |
+| Mature open-source skill repository practice | Product-facing README order, bilingual entry points, installation paths, behavioral boundaries, validation instructions, repository map, provenance, and governance | Token Todo uses a linear README that explains the user problem, operating standard, linked decisions, use boundaries, examples, validation, and contribution surface before pointing to deeper references |
 
 ## Design choices
 
@@ -23,6 +23,10 @@ The canonical capability is `skills/token-todo`. The root plugin manifest gives 
 ### Resource pressure is a constraint, not a product goal
 
 The motivating problem is easy to misread as “spend the balance.” Token Todo instead requires a current project target, a user-stated resource envelope, a protected reserve, and observable acceptance. Expiry may break ties among valid candidates; it cannot create value, justify artificial work, or lower the safety bar.
+
+### Product-facing README before implementation detail
+
+The README is deliberately organized as a user-facing product entry point. It answers, in order, what problem the skill solves, what decisions it makes, when it should or should not be used, how to install it, what a safe request looks like, what it protects, how to validate it, and where the deeper instructions live. The bilingual pages keep those claims and boundaries aligned; implementation-level policy remains in `SKILL.md` and its focused references.
 
 ### Current-state language over expiry incident language
 

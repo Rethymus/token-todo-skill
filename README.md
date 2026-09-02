@@ -186,7 +186,7 @@ README.md / README.zh-CN.md         English and Simplified Chinese guides
 
 ## Design provenance
 
-The README structure and product-facing documentation approach follow the public conventions visible in [Rethymus/clean-correction](https://github.com/Rethymus/clean-correction): explain the problem, the operating standard, the linked decisions, use boundaries, installation, validation, repository structure, provenance, and governance in that order. The current-value, trusted-baseline, protected-state, root-first, proportional-validation, and counterfactual ideas were adapted to Token Todo's resource-scheduling problem; the reference repository remains separate and is not a runtime dependency.
+The README uses a product-facing order common in mature open-source skill repositories: explain the problem and operating standard first, then the linked decisions, use boundaries, installation, validation, repository structure, provenance, and governance. The current-value, trusted-baseline, protected-state, root-first, proportional-validation, and counterfactual ideas are Token Todo's own rules for resource scheduling.
 
 This repository also follows public conventions from [OpenAI's build-skills guidance](https://learn.chatgpt.com/docs/build-skills), the [Agent Skills specification](https://agentskills.io/specification), [OpenAI Plugins](https://github.com/openai/plugins), [Anthropic Skills](https://github.com/anthropics/skills), [Vercel Labs Agent Skills](https://github.com/vercel-labs/agent-skills), and [Superpowers](https://github.com/obra/superpowers). The implementation and prose here are original; no third-party skill code is vendored. A source-by-source adoption record is available in [`docs/design-notes.md`](docs/design-notes.md).
 
